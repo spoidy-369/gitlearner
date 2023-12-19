@@ -1,2 +1,2 @@
 # gitlearner
-I am Learnign Git
+I am learning Git
