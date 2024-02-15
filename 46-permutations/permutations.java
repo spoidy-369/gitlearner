@@ -1,23 +1,27 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
-        boolean vis[] = new boolean[nums.length];
-        help(nums,
-            new ArrayList<>(),
-            res,
-            vis);
+        help(nums,0,res);
         return res;
     }
-    public void help(int nums[],List<Integer> st,List<List<Integer>> res,boolean vis[]){
-        for(int i=0;i<nums.length;i++){
-            if(!vis[i]){
-                st.add(nums[i]);
-                vis[i] = true;
-                help(nums,st,res,vis);
-                st.remove(st.size()-1);
-                vis[i] = false;
+    public void help(int nums[],int ind,List<List<Integer>> res){
+        if(ind==nums.length){
+            List<Integer> st = new ArrayList<>();
+            for(int i:nums){
+                st.add(i);
             }
+            res.add(st);
+            return;
         }
-        if(st.size()==nums.length) res.add(new ArrayList<>(st));
+        for(int i=ind;i<nums.length;i++){
+            swap(nums,i,ind);
+            help(nums,ind+1,res);
+            swap(nums,i,ind);
+        }
+    }
+    void swap(int nums[],int i,int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }
